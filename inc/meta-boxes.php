@@ -28,9 +28,24 @@ function mytheme_custom_meta_single_recipe()
 		'closed'       => false, // True to keep the metabox closed by default.
 	));
 
+
+
 	$cmb->add_field(array(
-		'name'              => __('Prep Time', 'recipes'),
-		'desc'              => __('', 'recipes'),
+		'name'                  => __('Recipe Source', 'recipes'),
+		'desc'                  => __('For example: https://www.cookscountry.com/recipes/......', 'recipes'),
+		'id'                    => 'source_url',
+		'type'                  => 'textarea_small',
+		'attributes'            => array(
+			'rows' => '2',
+		),
+		'rcps_form_display'     => true,
+		'rcps_form_label'       => __('Recipe Source Link', 'recipes'),
+		'rcps_form_extra_class' => 'rcps-wide',
+	));
+
+	$cmb->add_field(array(
+		'name'              => __('Mise It', 'recipes'),
+		'desc'              => __('number', 'recipes'),
 		'id'                => PREFIX . 'prep_time',
 		'type'              => 'text_small',
 		'column'            => true,
@@ -137,7 +152,7 @@ function mytheme_custom_meta_single_recipe_ingredients()
 
 		$ingredient_group = new_cmb2_box(array(
 			'id'           => PREFIX . 'single_recipe_ingredients' . $list_number,
-			'title'        => __('Ingredients', 'recipes') . ' ' . $list_number,
+			'title'        => __('Shop it', 'recipes') . ' ' . $list_number,
 			'object_types' => array('recipe'),
 			'context'      => 'normal',
 			'priority'     => 'high',
