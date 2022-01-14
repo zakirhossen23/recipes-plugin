@@ -146,7 +146,7 @@ add_action('cmb2_init', 'mytheme_cmb2_box_video');
 function mytheme_custom_meta_single_recipe_ingredients()
 {
 
-	$list_numbers = array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10');
+	$list_numbers = array('', '2', '3', '4', '5', '6', '7', '8', '9', '10');
 
 	foreach ($list_numbers as $list_number) {
 

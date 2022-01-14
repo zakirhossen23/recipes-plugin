@@ -19,7 +19,11 @@ add_shortcode('ingredients2', 'mytheme_ingredient_list_shortcode');
 add_shortcode('ingredients3', 'mytheme_ingredient_list_shortcode');
 add_shortcode('ingredients4', 'mytheme_ingredient_list_shortcode');
 add_shortcode('ingredients5', 'mytheme_ingredient_list_shortcode');
-
+add_shortcode('ingredients6', 'mytheme_ingredient_list_shortcode');
+add_shortcode('ingredients7', 'mytheme_ingredient_list_shortcode');
+add_shortcode('ingredients8', 'mytheme_ingredient_list_shortcode');
+add_shortcode('ingredients9', 'mytheme_ingredient_list_shortcode');
+add_shortcode('ingredients10', 'mytheme_ingredient_list_shortcode');
 if (!function_exists('mytheme_ingredient_list_shortcode')) {
 	/**
 	 * Runs the callback function to build the ingredient list based on the shortcode number.
