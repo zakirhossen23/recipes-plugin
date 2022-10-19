@@ -12,133 +12,7 @@
 // Defines prefix used for the custom fields.
 define('PREFIX', 'custom_meta_');
 
-/**
- * Sets meta boxes for single recipes.
- */
-function mytheme_custom_meta_single_recipe()
-{
 
-	$cmb = new_cmb2_box(array(
-		'id'           => PREFIX . 'single_recipe',
-		'title'        => __('Recipe Details', 'recipes'),
-		'object_types' => array('recipe'),
-		'context'      => 'normal',
-		'priority'     => 'high',
-		'show_names'   => true, // Show field names on the left.
-		'closed'       => false, // True to keep the metabox closed by default.
-	));
-
-
-
-	$cmb->add_field(array(
-		'name'                  => __('Recipe Source', 'recipes'),
-		'desc'                  => __('For example: https://www.cookscountry.com/recipes/......', 'recipes'),
-		'id'                    => 'source_url',
-		'type'                  => 'textarea_small',
-		'attributes'            => array(
-			'rows' => '2',
-		),
-		'rcps_form_display'     => true,
-		'rcps_form_label'       => __('Recipe Source Link', 'recipes'),
-		'rcps_form_extra_class' => 'rcps-wide',
-	));
-
-	$cmb->add_field(array(
-		'name'              => __('Mise It', 'recipes'),
-		'desc'              => __('number', 'recipes'),
-		'id'                => PREFIX . 'prep_time',
-		'type'              => 'text_small',
-		'column'            => true,
-		'rcps_form_display' => true,
-		'attributes'        => array(
-			'type' => 'number',
-			'step' => '1',
-			'min'  => '1',
-			'size' => '3',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'              => __('Make it', 'recipes'),
-		'desc'              => __('number', 'recipes'),
-		'id'                => PREFIX . 'cook_time',
-		'type'              => 'text_small',
-		'column'            => true,
-		'rcps_form_display' => true,
-		'attributes'        => array(
-			'type' => 'number',
-			'step' => '1',
-			'min'  => '1',
-			'size' => '3',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name' => __('Likes', 'recipes'),
-		'id'   => PREFIX . 'votes_up',
-		'type' => 'text_small',
-	));
-
-	$cmb->add_field(array(
-		'name' => __('Dislikes', 'recipes'),
-		'id'   => PREFIX . 'votes_down',
-		'type' => 'text_small',
-	));
-
-	$cmb->add_field(array(
-		'name'                  => __('External Recipe URL', 'recipes'),
-		'desc'                  => __('For example: http://www.recipe.com/delicious-cookies', 'recipes'),
-		'id'                    => PREFIX . 'external_url',
-		'type'                  => 'textarea_small',
-		'attributes'            => array(
-			'rows' => '2',
-		),
-		'rcps_form_display'     => true,
-		'rcps_form_label'       => __('Recipe Link', 'recipes'),
-		'rcps_form_extra_class' => 'rcps-wide',
-	));
-
-	$cmb->add_field(array(
-		'name'                  => __('External Recipe Site Title', 'recipes'),
-		'desc'                  => __('For example: Allrecipes', 'recipes'),
-		'id'                    => PREFIX . 'external_site',
-		'type'                  => 'text_medium',
-		'rcps_form_display'     => true,
-		'rcps_form_label'       => __('Site Title', 'recipes'),
-		'rcps_form_extra_class' => 'rcps-wide',
-	));
-
-	do_action('rcps_action_cmb2_box_single_recipe', $cmb);
-}
-add_action('cmb2_init', 'mytheme_custom_meta_single_recipe');
-
-/**
- * Registers video meta for posts and recipes.
- */
-function mytheme_cmb2_box_video()
-{
-
-	$cmb = new_cmb2_box(array(
-		'id'           => 'cmb2_box_video',
-		'title'        => __('Video', 'recipes'),
-		'object_types' => array('post', 'recipe'),
-		'context'      => 'normal',
-		'priority'     => 'high',
-		'show_names'   => true, // Show field names on the left.
-		'closed'       => false, // True to keep the metabox closed by default.
-	));
-
-	$cmb->add_field(array(
-		'name'                  => __('Video URL', 'recipes'),
-		'desc'                  => __('For example: https://www.youtube.com/watch?v=2kl3Liy5jcQ', 'recipes'),
-		'id'                    => '_rcps_meta_video_url',
-		'type'                  => 'oembed',
-		'column'                => true,
-		'rcps_form_display'     => true,
-		'rcps_form_extra_class' => 'rcps-wide',
-	));
-}
-add_action('cmb2_init', 'mytheme_cmb2_box_video');
 
 /**
  * Sets meta boxes for ingredient lists.
@@ -155,7 +29,7 @@ function mytheme_custom_meta_single_recipe_ingredients()
 			'title'        => __('Shop it', 'recipes') . ' ' . $list_number,
 			'object_types' => array('recipe'),
 			'context'      => 'normal',
-			'priority'     => 'high',
+			'priority'     => 'default',
 			'show_names'   => true,
 			'closed'       => ($list_number >= 1 ? true : false),
 		));
@@ -191,6 +65,93 @@ function mytheme_custom_meta_single_recipe_ingredients()
 	}
 }
 add_action('cmb2_admin_init', 'mytheme_custom_meta_single_recipe_ingredients');
+
+
+
+/**
+ * Sets meta boxes for Mise it lists.
+ */
+function mytheme_custom_meta_single_recipe_miseit()
+{
+
+	$list_numbers = array('', '2', '3', '4', '5', '6', '7', '8', '9', '10','11','12','13','14','15','16','17','18','19','20');
+
+	foreach ($list_numbers as $list_number) {
+
+		$miseit_group = new_cmb2_box(array(
+			'id'           => PREFIX . 'single_recipe_miseits' . $list_number,
+			'title'        => __('Mise it', 'recipes') . ' ' . $list_number,
+			'object_types' => array('recipe'),
+			'context'      => 'normal',
+			'priority'     => 'default',
+			'show_names'   => true,
+			'closed'       => ($list_number >= 1 ? true : false),
+		));
+
+		$miseit_group->add_field(array(
+			'name' => __('Mise It Name', 'recipes'),
+			'id'   => PREFIX . 'miseit_group' . $list_number . '_title',
+			'type' => 'text_medium',
+		));
+
+		$group_field_id = $miseit_group->add_field(array(
+			'id'      => PREFIX . 'miseit_group' . $list_number,
+			'type'    => 'group',
+			'options' => array(
+				'group_title'   => __('Mise It Item {#}', 'recipes'),
+				'add_button'    => __('Add Another Mise It Item', 'recipes'),
+				'remove_button' => __('Remove Mise It Item', 'recipes'),
+				'sortable'      => true,
+			),
+		));
+
+		$miseit_group->add_group_field($group_field_id, array(
+			'name' => __('Ingredient and Amount', 'recipes'),
+			'id'   => 'ingredient',
+			'type' => 'text',
+		));
+
+		$miseit_group->add_group_field($group_field_id, array(
+			'name' => __('Instructions', 'recipes'),
+			'id'   => 'instruction',
+			'type' => 'textarea_small',
+		));
+
+	}
+}
+add_action('cmb2_admin_init', 'mytheme_custom_meta_single_recipe_miseit');
+
+
+
+/**
+ * Registers video meta for posts and recipes.
+ */
+function mytheme_cmb2_box_video()
+{
+
+	$cmb = new_cmb2_box(array(
+		'id'           => 'cmb2_box_video',
+		'title'        => __('Video', 'recipes'),
+		'object_types' => array('post', 'recipe'),
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => true, // Show field names on the left.
+		'closed'       => false, // True to keep the metabox closed by default.
+	));
+
+	$cmb->add_field(array(
+		'name'                  => __('Video URL', 'recipes'),
+		'desc'                  => __('For example: https://www.youtube.com/watch?v=2kl3Liy5jcQ', 'recipes'),
+		'id'                    => '_rcps_meta_video_url',
+		'type'                  => 'oembed',
+		'column'                => true,
+		'rcps_form_display'     => true,
+		'rcps_form_extra_class' => 'rcps-wide',
+	));
+}
+add_action('cmb2_init', 'mytheme_cmb2_box_video');
+
+
 
 /**
  * Sets meta boxes for nutrition facts.
@@ -491,7 +452,7 @@ function mytheme_cmb2_box_terms()
 add_action('cmb2_admin_init', 'mytheme_cmb2_box_terms');
 
 /**
- * Handles sanitization for float values. Allows using comma as a decimal separator.
+ * Handles sanitization for float values. Aldefaults using comma as a decimal separator.
  *
  * @param  mixed      $value      The unsanitized value from the form.
  * @param  array      $field_args Array of field arguments.
@@ -532,3 +493,103 @@ function rcps_show_metabox_to_chosen_user_types($show, $meta_box)
 	return current_user_can($meta_box['show_on']['value']);
 }
 add_filter('cmb2_show_on', 'rcps_show_metabox_to_chosen_user_types', 10, 2);
+
+/**
+ * Sets meta boxes for single recipes.
+ */
+function mytheme_custom_meta_single_recipe()
+{
+
+	$cmb = new_cmb2_box(array(
+		'id'           => PREFIX . 'single_recipe',
+		'title'        => __('Recipe Details', 'recipes'),
+		'object_types' => array('recipe'),
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => true, // Show field names on the left.
+		'closed'       => false, // True to keep the metabox closed by default.
+	));
+
+
+
+	$cmb->add_field(array(
+		'name'                  => __('Recipe Source', 'recipes'),
+		'desc'                  => __('For example: https://www.cookscountry.com/recipes/......', 'recipes'),
+		'id'                    => 'source_url',
+		'type'                  => 'textarea_small',
+		'attributes'            => array(
+			'rows' => '2',
+		),
+		'rcps_form_display'     => true,
+		'rcps_form_label'       => __('Recipe Source Link', 'recipes'),
+		'rcps_form_extra_class' => 'rcps-wide',
+	));
+
+	$cmb->add_field(array(
+		'name'              => __('Mise It', 'recipes'),
+		'desc'              => __('number', 'recipes'),
+		'id'                => PREFIX . 'prep_time',
+		'type'              => 'text_small',
+		'column'            => true,
+		'rcps_form_display' => true,
+		'attributes'        => array(
+			'type' => 'number',
+			'step' => '1',
+			'min'  => '1',
+			'size' => '3',
+		),
+	));
+
+	$cmb->add_field(array(
+		'name'              => __('Make it', 'recipes'),
+		'desc'              => __('number', 'recipes'),
+		'id'                => PREFIX . 'cook_time',
+		'type'              => 'text_small',
+		'column'            => true,
+		'rcps_form_display' => true,
+		'attributes'        => array(
+			'type' => 'number',
+			'step' => '1',
+			'min'  => '1',
+			'size' => '3',
+		),
+	));
+
+	$cmb->add_field(array(
+		'name' => __('Likes', 'recipes'),
+		'id'   => PREFIX . 'votes_up',
+		'type' => 'text_small',
+	));
+
+	$cmb->add_field(array(
+		'name' => __('Dislikes', 'recipes'),
+		'id'   => PREFIX . 'votes_down',
+		'type' => 'text_small',
+	));
+
+	$cmb->add_field(array(
+		'name'                  => __('External Recipe URL', 'recipes'),
+		'desc'                  => __('For example: http://www.recipe.com/delicious-cookies', 'recipes'),
+		'id'                    => PREFIX . 'external_url',
+		'type'                  => 'textarea_small',
+		'attributes'            => array(
+			'rows' => '2',
+		),
+		'rcps_form_display'     => true,
+		'rcps_form_label'       => __('Recipe Link', 'recipes'),
+		'rcps_form_extra_class' => 'rcps-wide',
+	));
+
+	$cmb->add_field(array(
+		'name'                  => __('External Recipe Site Title', 'recipes'),
+		'desc'                  => __('For example: Allrecipes', 'recipes'),
+		'id'                    => PREFIX . 'external_site',
+		'type'                  => 'text_medium',
+		'rcps_form_display'     => true,
+		'rcps_form_label'       => __('Site Title', 'recipes'),
+		'rcps_form_extra_class' => 'rcps-wide',
+	));
+
+	do_action('rcps_action_cmb2_box_single_recipe', $cmb);
+}
+add_action('cmb2_init', 'mytheme_custom_meta_single_recipe');

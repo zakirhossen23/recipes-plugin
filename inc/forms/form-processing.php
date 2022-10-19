@@ -258,7 +258,7 @@ function rcps_validate_form( $edit_recipe_id ) {
 			$form_errors['custom_meta_external_site'] = $error_messages['custom_meta_external_site'];
 		}
 	}
-
+	//Ingredients
 	if ( ! empty( $post['form_type'] ) && 'submit_form_recipe' === $post['form_type'] ) {
 		if ( ! empty( $post['ingredient_lists'] ) ) {
 			foreach ( $post['ingredient_lists'] as $key => $ingredient_list ) {
@@ -296,6 +296,44 @@ function rcps_validate_form( $edit_recipe_id ) {
 			$form_errors['ingredient'] = $error_messages['ingredients'];
 		}
 	}
+
+	//Mise it
+	if ( ! empty( $post['form_type'] ) && 'submit_form_recipe' === $post['form_type'] ) {
+		if ( ! empty( $post['miseit_lists'] ) ) {
+			foreach ( $post['miseit_lists'] as $key => $miseit_list ) {
+				$list_number = ( 1 === $key ) ? '' : $key;
+
+				$form['miseit_lists'][ $key ] = array();
+
+				if ( $edit_recipe_id ) {
+					delete_post_meta( $edit_recipe_id, 'custom_meta_miseit_group' . $list_number . '_title' );
+					delete_post_meta( $edit_recipe_id, 'custom_meta_miseit_group' . $list_number );
+				}
+
+				if ( ! empty( $miseit_list['miseit_title'] ) ) {
+					$form['miseit_lists'][ $key ]['miseit_title'] = $miseit_list['miseit_title'];
+
+					$form['meta'][ 'custom_meta_miseit_group' . $list_number . '_title' ] = $miseit_list['miseit_title'];
+				}
+
+				foreach ( $miseit_list['miseits'] as $items ) {
+					if ( empty( $items['ingredient'] ) && empty( $items['instruction'] ) ) {
+						continue;
+					}
+
+					if ( empty( $items['ingredient'] ) ) {
+						$form_errors['miseit'] = $error_messages['miseit'];
+					}
+
+					$form['miseit_lists'][ $key ]['ingredient'][] = $items;
+					$form['meta'][ 'custom_meta_miseit_group' . $list_number ][] = $items;
+				}
+			}
+		}
+
+	}
+	
+	
 
 	// Image validation.
 	if ( ! empty( $_FILES['image'] ) && $_FILES['image']['size'] > 0 ) {

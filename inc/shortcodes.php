@@ -69,6 +69,7 @@ if (!function_exists('mytheme_ingredient_list')) {
 			ob_start();
 ?>
 
+
 			<h2><?php echo esc_html($title); ?></h2>
 
 			<table class="rcps-table-ingredients">
@@ -107,6 +108,116 @@ if (!function_exists('mytheme_ingredient_list')) {
 		}
 	}
 }
+
+
+/**
+ * Adds hooks for shortcode tags.
+ */
+add_shortcode('miseits',  'mytheme_miseit_list_shortcode');
+add_shortcode('miseits2', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits3', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits4', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits5', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits6', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits7', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits8', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits9', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits10', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits11',  'mytheme_miseit_list_shortcode');
+add_shortcode('miseits12', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits13', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits14', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits15', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits16', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits17', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits18', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits19', 'mytheme_miseit_list_shortcode');
+add_shortcode('miseits20', 'mytheme_miseit_list_shortcode');
+if (!function_exists('mytheme_miseit_list_shortcode')) {
+	/**
+	 * Runs the callback function to build the miseit list based on the shortcode number.
+	 *
+	 * @param  array  $atts      Shortcode attributes.
+	 * @param  string $content   Shortcode content.
+	 * @param  string $shortcode Name of the shortcode.
+	 * @return string            miseit list HTML.
+	 */
+	function mytheme_miseit_list_shortcode($atts, $content = null, $shortcode)
+	{
+
+		if ($shortcode) {
+
+			// Gets the miseit list number from the shortcode.
+			$list_number = str_replace('miseits', '', $shortcode);
+
+			// Returns the miseit list HTML.
+			return mytheme_miseit_list($list_number);
+		}
+		
+	}
+}
+
+if (!function_exists('mytheme_miseit_list')) {
+	/**
+	 * Outputs the miseit list HTML from the shortcode.
+	 *
+	 * @param  int $list_number Number of the miseit list shortcode.
+	 */
+	function mytheme_miseit_list($list_number = null)
+	{
+
+		$miseits = get_post_meta(get_the_ID(), 'custom_meta_miseit_group' . $list_number, true);
+		$title       = get_post_meta(get_the_ID(), 'custom_meta_miseit_group' . $list_number . '_title', true);
+		
+		if (is_array($miseits) && !empty($miseits[0])) {
+
+			if (empty($title)) {
+				$title = __('Mise it', 'recipes');
+			}
+
+			// Turn on output buffering.
+			ob_start();
+?>
+			<figure class="wp-block-table is-style-stripes"><table><tbody><tr><td><strong>
+				<span style="padding: 0.6rem 0.2rem;"><?php echo esc_html($title); ?></span></strong></td><td style="display: flex;align-items: center;justify-content: flex-end;" class="has-text-align-right" data-align="right">
+				<span class="numbers"><?php echo intval($list_number) == 0?1:intval($list_number) ?></span></td></tr>
+	
+				<?php
+				foreach ($miseits as $key => $entry) {
+					$ingredient = '';
+					$instruction     = '';
+
+					if (!empty($entry['ingredient'])) {
+						$ingredient = $entry['ingredient'];
+						if (is_rtl()) {
+							$ingredient = '&#8207;' . $ingredient;
+						}
+					}
+
+					if (!empty($entry['instruction'])) {
+						$instruction = $entry['instruction'];
+					}
+
+					if (!empty($entry['ingredient'])) {
+				?>
+						<tr >
+							<td style="padding: 0rem 0.2rem;"><?php echo wp_kses_post($ingredient); ?></td>
+							<td class="has-text-align-right" data-align="right"><?php echo wp_kses_post($instruction); ?></td>
+						</tr>
+				<?php
+					}
+				}
+				?>
+			</tbody></table></figure>
+		<?php
+
+			// Gets current buffer contents and deletes current output buffer.
+			return ob_get_clean();
+		}
+	}
+}
+
+
 
 if (!function_exists('mytheme_shortcode_rcps_recipe_listing')) {
 	/**

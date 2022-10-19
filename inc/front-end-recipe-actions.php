@@ -120,6 +120,35 @@ if (!function_exists('mytheme_transform_post_to_form')) {
 			}
 		}
 
+
+		for ($i = 1; $i <= 20; $i++) {
+			$list_number = (1 === $i) ? '' : $i;
+
+			$items       = null;
+			$miseits_title = null;
+
+			if (empty($items)) {
+				$items       = get_post_meta($edit_recipe_id, 'custom_meta_miseit_group' . $list_number, true);
+				$miseits_title = get_post_meta($edit_recipe_id, 'custom_meta_miseit_group' . $list_number . '_title', true);
+			} elseif (!empty($transient)) {
+				if (!empty($transient['miseit_lists'][$i]['ingredient'])) {
+					$items = $transient['miseit_lists'][$i]['ingredient'];
+				}
+
+				if (!empty($transient['miseit_lists'][$i]['miseit_title'])) {
+					$miseit_title = $transient['miseit_lists'][$i]['miseits_title'];
+				}
+			}
+
+			if (!empty($items)) {
+				$form['miseit_lists'][$i]['ingredient'] = $items;
+			}
+
+			if (!empty($miseit_title)) {
+				$form['miseit_lists'][$i]['miseit_title'] = $miseits_title;
+			}
+		}
+
 		return $form;
 	}
 }
