@@ -91,7 +91,7 @@ if (!function_exists('mytheme_transform_post_to_form')) {
 				}
 			}
 		}
-
+		//Shop it
 		for ($i = 1; $i <= 10; $i++) {
 			$list_number = (1 === $i) ? '' : $i;
 
@@ -120,7 +120,7 @@ if (!function_exists('mytheme_transform_post_to_form')) {
 			}
 		}
 
-
+		//Mise it
 		for ($i = 1; $i <= 20; $i++) {
 			$list_number = (1 === $i) ? '' : $i;
 
@@ -148,6 +148,39 @@ if (!function_exists('mytheme_transform_post_to_form')) {
 				$form['miseit_lists'][$i]['miseit_title'] = $miseits_title;
 			}
 		}
+
+		//Make it Tools
+		$mekit_cmb = null;
+		$makeits_tools = null;
+		$mekit_cmb     = get_post_meta($edit_recipe_id, 'single_recipe_makeits', true);
+		$makeits_tools = get_post_meta($edit_recipe_id, 'makeit_tools_group' . '_tools', true);
+
+		if (!empty($mekit_cmb)) {
+			$form['makeit_tools'] = $mekit_cmb;
+		}
+
+		if (!empty($makeits_tools)) {
+			$form['makeits_tools']['makeit_tools'] = $makeits_tools;
+		}
+
+		//Make it items
+		for ($i = 1; $i <= 5; $i++) {
+			$list_number = (1 === $i) ? '' : $i;
+			$items       = null;
+			if (empty($items)) {
+				$items       = get_post_meta($edit_recipe_id, 'makeit_group_item' . $list_number, true);
+			} elseif (!empty($transient)) {
+				if (!empty($transient['makeit_lists'][$i]['do'])) {
+					$items = $transient['makeit_lists'][$i]['do'];
+				}
+			}
+
+			if (!empty($items)) {
+				$form['makeit_lists'] = $items;
+			}
+
+		}
+		
 
 		return $form;
 	}

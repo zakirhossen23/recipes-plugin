@@ -305,11 +305,7 @@ function rcps_validate_form( $edit_recipe_id ) {
 
 				$form['miseit_lists'][ $key ] = array();
 
-				if ( $edit_recipe_id ) {
-					delete_post_meta( $edit_recipe_id, 'custom_meta_miseit_group' . $list_number . '_title' );
-					delete_post_meta( $edit_recipe_id, 'custom_meta_miseit_group' . $list_number );
-				}
-
+			
 				if ( ! empty( $miseit_list['miseit_title'] ) ) {
 					$form['miseit_lists'][ $key ]['miseit_title'] = $miseit_list['miseit_title'];
 
@@ -317,7 +313,7 @@ function rcps_validate_form( $edit_recipe_id ) {
 				}
 
 				foreach ( $miseit_list['miseits'] as $items ) {
-					if ( empty( $items['ingredient'] ) && empty( $items['instruction'] ) ) {
+					if ( empty( $items['ingredient'] ) ) {
 						continue;
 					}
 
@@ -334,6 +330,43 @@ function rcps_validate_form( $edit_recipe_id ) {
 	}
 	
 	
+	//Make it Tools
+	if ( ! empty( $post['form_type'] ) && 'submit_form_recipe' === $post['form_type'] ) {
+		if ( ! empty( $post['makeits_tools'] ) ) {
+			
+
+		}
+
+	}
+
+
+		//Make it
+	if ( ! empty( $post['form_type'] ) && 'submit_form_recipe' === $post['form_type'] ) {
+		if ( ! empty( $post['makeit_lists'] ) ) {
+			foreach ( $post['makeit_lists'] as $key => $makeit_list ) {
+				$list_number = ( 1 === $key ) ? '' : $key;
+
+				$form['makeit_lists'][ $key ] = array();
+
+				foreach ( $makeit_list['makeits'] as $items ) {
+					if ( empty( $items['do'] ) ) {
+						continue;
+					}
+
+					if ( empty( $items['do'] ) ) {
+						$form_errors['makeit'] = $error_messages['makeit'];
+					}
+
+					$form['makeit_lists'][ $key ]['do'][] = $items;
+					$form['meta'][ 'custom_meta_makeit_group' . $list_number ][] = $items;
+				}
+			}
+		}
+
+	}
+	
+	
+
 
 	// Image validation.
 	if ( ! empty( $_FILES['image'] ) && $_FILES['image']['size'] > 0 ) {

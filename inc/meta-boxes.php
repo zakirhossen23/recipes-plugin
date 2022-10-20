@@ -122,6 +122,88 @@ function mytheme_custom_meta_single_recipe_miseit()
 add_action('cmb2_admin_init', 'mytheme_custom_meta_single_recipe_miseit');
 
 
+/**
+ * Sets meta boxes for Make it lists.
+ */
+function mytheme_custom_meta_single_recipe_makeit()
+{
+	
+	$makeit_tools_group = new_cmb2_box(array(
+		'id'           => PREFIX . 'single_recipe_makeits',
+		'title'        => __('Make it Tools', 'recipes') ,
+		'object_types' => array('recipe'),
+		'context'      => 'normal',
+		'priority'     => 'default',
+		'show_names'   => true,
+		'closed'       => true ,
+	));
+
+
+	$makeit_tools_group->add_field(array(
+		'name' => __('Make It Tools', 'recipes'),
+		'id'   => PREFIX . 'makeit_tools_group'. '_tools',
+		'type' => 'textarea_small',
+	));
+
+
+	$list_numbers = array('', '2', '3', '4', '5');
+
+	// $list_numbers = array('', '2', '3', '4', '5', '6', '7', '8', '9', '10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50');
+
+	foreach ($list_numbers as $list_number) {
+		$makeit_group = new_cmb2_box(array(
+			'id'           => PREFIX . 'single_recipe__group_makeits' . $list_number,
+			'title'        => __('Make it Group', 'recipes') . ' '. $list_number ,
+			'object_types' => array('recipe'),
+			'context'      => 'normal',
+			'priority'     => 'default',
+			'show_names'   => true,
+			'closed'       => true ,
+		));
+	
+		
+		
+		$makeit_group->add_field(array(
+			'name' => __('Group Name', 'recipes'),
+			'id'   => PREFIX . 'makeit_group'. $list_number. '_name',
+			'type' => 'text',
+		));
+		$group_item_field_id = $makeit_group->add_field(array(
+		'id'      => PREFIX . 'makeit_group_item' . $list_number,
+		'type'    => 'group',
+		'options' => array(
+			'group_title'   => __('Item {#}', 'recipes'),
+			'add_button'    => __('Add Another Item', 'recipes'),
+			'remove_button' => __('Remove Item', 'recipes'),
+			
+		)
+		));
+		$makeit_group->add_group_field($group_item_field_id, array(
+			'name' => __('Do', 'recipes'),
+			'id'   => 'do',
+			'type' => 'text',
+		));
+		$makeit_group->add_group_field($group_item_field_id, array(
+			'name' => __('With', 'recipes'),
+			'id'   =>'with',
+			'type' => 'textarea_small',
+		));
+		$makeit_group->add_group_field($group_item_field_id, array(
+		'name' => __('How', 'recipes'),
+		'id'   =>'how',
+		'type' => 'text',
+		));
+		$makeit_group->add_group_field($group_item_field_id, array(
+			'name' => __('Important', 'recipes'),
+			'id'   =>'important',
+			'type' => 'text',
+		));
+	}
+
+}
+add_action('cmb2_admin_init', 'mytheme_custom_meta_single_recipe_makeit');
+
+
 
 /**
  * Registers video meta for posts and recipes.

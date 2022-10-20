@@ -177,7 +177,7 @@ if (!function_exists('mytheme_miseit_list')) {
 
 			// Turn on output buffering.
 			ob_start();
-?>
+			?>
 			<figure class="wp-block-table is-style-stripes"><table><tbody><tr><td><strong>
 				<span style="padding: 0.6rem 0.2rem;"><?php echo esc_html($title); ?></span></strong></td><td style="display: flex;align-items: center;justify-content: flex-end;" class="has-text-align-right" data-align="right">
 				<span class="numbers"><?php echo intval($list_number) == 0?1:intval($list_number) ?></span></td></tr>
@@ -214,6 +214,126 @@ if (!function_exists('mytheme_miseit_list')) {
 			// Gets current buffer contents and deletes current output buffer.
 			return ob_get_clean();
 		}
+	}
+}
+
+
+if (!function_exists('mytheme_shortcode_makeit_tools')) {
+	/**
+	 * Embeds video.
+	 *
+	 * @param  array  $atts      Shortcode attributes.
+	 * @param  string $content   Shortcode content.
+	 * @param  string $shortcode Name of the shortcode.
+	 * @return string            HTML.
+	 */
+	function mytheme_shortcode_makeit_tools($atts, $content = null, $shortcode)
+	{
+		$makeit_tools =  get_post_meta(get_the_ID(), 'custom_meta_makeit_tools_group' . '_tools', true);
+		// Turn on output buffering.
+		ob_start();
+		?>
+		<figure class="wp-block-table is-style-stripes">
+			<table>
+				<tbody>
+					<tr><td>
+						<strong>TOOLS</strong>
+					</td></tr>
+					<tr><td style="white-space: pre-line;"><?php echo ($makeit_tools); ?>				
+					</td></tr>
+				</tbody>
+			</table>
+		</figure>
+		<?php
+		// Gets current buffer contents and deletes current output buffer.
+		return ob_get_clean();			
+	}
+}
+add_shortcode('makeit_tools', 'mytheme_shortcode_makeit_tools');
+
+
+
+/**
+ * Adds hooks for shortcode tags.
+ */
+add_shortcode('makeits',  'mytheme_makeit_list_shortcode');
+add_shortcode('makeits2', 'mytheme_makeit_list_shortcode');
+add_shortcode('makeits3', 'mytheme_makeit_list_shortcode');
+add_shortcode('makeits4', 'mytheme_makeit_list_shortcode');
+add_shortcode('makeits5', 'mytheme_makeit_list_shortcode');
+if (!function_exists('mytheme_makeit_list_shortcode')) {
+	/**
+	 * Runs the callback function to build the makeit list based on the shortcode number.
+	 *
+	 * @param  array  $atts      Shortcode attributes.
+	 * @param  string $content   Shortcode content.
+	 * @param  string $shortcode Name of the shortcode.
+	 * @return string            makeit list HTML.
+	 */
+	function mytheme_makeit_list_shortcode($atts, $content = null, $shortcode)
+	{
+
+		if ($shortcode) {
+
+			// Gets the makeit list number from the shortcode.
+			$list_number = str_replace('makeits', '', $shortcode);
+
+			// Returns the makeit list HTML.
+			return mytheme_makeit_list($list_number);
+		}
+		
+	}
+}
+
+if (!function_exists('mytheme_makeit_list')) {
+	/**
+	 * Embeds video.
+	 *
+	 * @param  array  $atts      Shortcode attributes.
+	 * @param  string $content   Shortcode content.
+	 * @param  string $shortcode Name of the shortcode.
+	 * @return string            HTML.
+	 */
+	function mytheme_makeit_list($list_number = null)
+	{
+		$mikeits = get_post_meta(get_the_ID(), 'custom_meta_makeit_group_item' . $list_number, true);
+		$name       = get_post_meta(get_the_ID(), 'custom_meta_makeit_group' . $list_number . '_name', true);
+		if (is_array($mikeits) && !empty($mikeits[0])) {
+					// Turn on output buffering.
+			ob_start();	
+			if (!empty($name)){
+				?>
+				<tr><td colspan="4"><strong><span class="has-inline-color has-vivid-red-color"><?php echo $name; ?></span></strong></td><td></td><td></td><td class="has-text-align-center" data-align="center"></td></tr>
+				<?php
+			}
+			foreach ($mikeits as $key => $entry) {
+				$do = '';
+				$with     = '';
+				$how     = '';
+				$important     = '';
+
+				if (!empty($entry['do'])) {$do = $entry['do'];if (is_rtl()) {$do = '&#8207;' . $do;}}
+				if (!empty($entry['with'])) {$with = $entry['with'];if (is_rtl()) {$with = '&#8207;' . $with;}}
+				if (!empty($entry['how'])) {$how = $entry['how'];if (is_rtl()) {$how = '&#8207;' . $how;}}					
+				if (!empty($entry['important'])) {$important = $entry['important'];if (is_rtl()) {$important = '&#8207;' . $important;}}		
+				
+					if (!empty($entry['do'])) {		
+					?>
+						<tr class="rcps-makeit-checkable">
+							<td><?php echo wp_kses_post($do); ?></td>
+							<td><?php echo $with; ?></td>
+							<td><?php echo $how; ?></td>
+							<td class="has-text-align-center" data-align="center"><?php echo $important; ?></td>
+						</tr>								
+					<?php
+				
+				}
+				
+			}
+
+			// Gets current buffer contents and deletes current output buffer.
+			return ob_get_clean();
+		}	
 	}
 }
 

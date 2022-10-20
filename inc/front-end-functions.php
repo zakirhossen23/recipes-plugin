@@ -88,7 +88,7 @@ if (!function_exists('mytheme_the_content_filter')) {
 								<img loading="lazy" id="shopitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://secureservercdn.net/198.71.233.213/ogy.39b.myftpupload.com/wp-content/uploads/2021/12/Mini-Cart.jpg" src="undefined"/>
 								 Shop It!
 							</div>				
-						<style>.numbers {background: black;color: white;border-radius: 50%;width: 30px;align-items: center;text-align: center;font-size: 20px;font-family: calibri;vertical-align: middle;height: 30px;display: inline-block;}</style>
+						<style>.numbers {background: black;color: white;border-radius: 50%;width: 26px;align-items: center;margin: 0.5rem;text-align: center;font-size: 19px;font-family: calibri;vertical-align: middle;height: 26px;display: inline-block;}</style>
 					</div>
 				</div>
 			<?php
@@ -124,15 +124,56 @@ if (!function_exists('mytheme_the_content_filter')) {
 			$content = $content . $html;
 			if ($miseit_count !== 0){
 				ob_start();?>
-				<div style="text-align: center;font-size: 2.25em;height: 87px;" id="MiseIt"><button id="miseitprintbtn" onclick="miseitprint()" style="float: right;height: 45px;font-size: 26px;width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://shopitmiseitmakeit.ca/wp-content/uploads/2021/12/Mini-Bowl-2.jpg " src="undefined"> <span>Mise It!</span></div></div>
+				<div  id="MiseIt">
+					<div style="text-align: center;font-size: 2.25em;height: 87px;"><button id="miseitprintbtn" onclick="miseitprint()" style="float: right;height: 45px;font-size: 26px;width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://shopitmiseitmakeit.ca/wp-content/uploads/2021/12/Mini-Bowl-2.jpg " src="undefined"> <span>Mise It!</span></div></div>
 				<?php
 				$html = ob_get_clean();
 				$content = $content . $html;
 			}
 			
-			$content = $content . $miseit_lists;
+			$content = $content . $miseit_lists . '</div>';
 
-
+			//Make it Tools
+			$makeit_tools = '';
+			if (!has_shortcode($content, 'makeit_tools') && !empty(get_post_meta(get_the_ID(), 'custom_meta_makeit_tools_group_tools'))) {
+				$makeit_tools .= do_shortcode('[makeit_tools]');
+				ob_start();?>
+				<div id="MakeIt"> 
+					<div style="text-align: center;font-size: 2.25em;height: 87px;" ><button id="makeitprintbtn" onclick="makeitprint()" style="float: right;height: 45px;font-size: 26px;width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://secureservercdn.net/198.71.233.213/ogy.39b.myftpupload.com/wp-content/uploads/2021/12/Shop-It-Mise-It-Make-It-Logo-Design-06.jpg" src="undefined"> <span>Make It!</span></div></div>
+				<?php
+				$html = ob_get_clean();
+				$content = $content . $html;
+			}
+			if ($makeit_tools !== ''){
+				$content = $content . $makeit_tools;
+				ob_start();?>
+				<figure class="wp-block-table is-style-stripes">
+				<table class="rcps-table-makeit">
+					<tbody>
+						<tr><td><strong>DO</strong></td><td style="min-width: 120px;"><strong>WITH</strong></td><td><strong>HOW</strong></td><td class="has-text-align-center" data-align="center"><strong>IMPORTANT</strong></td></tr>
+			
+				<?php
+				$html = ob_get_clean();
+				$content = $content . $html;
+	
+				//Make it		
+				$makeit_lists = '';
+				for ($i = 1; $i <= 5; $i++) {
+					$list_number = (1 === $i) ? '' : $i;
+	
+					if (!has_shortcode($content, 'makeits' . $list_number)) {
+						$makeit_lists .= do_shortcode('[makeits' . $list_number . ']');
+					}
+				}
+				$content = $content . $makeit_lists;			
+				ob_start();?>
+				</tbody></table></figure></div>
+				<?php
+				$html = ob_get_clean();
+				$content = $content . $html;
+			}
+			
+			
 			if (mytheme_is_external_recipe()) {
 				ob_start(); ?>
 				<p><a href="<?php echo esc_url(get_post_meta(get_the_ID(), 'custom_meta_external_url', true)); ?>" class="rcps-btn" target="_blank" rel="noopener"><?php esc_html_e('View the recipe at', 'recipes'); ?> <b><?php echo esc_html(get_post_meta(get_the_ID(), 'custom_meta_external_site', true)); ?></b></a></p>
