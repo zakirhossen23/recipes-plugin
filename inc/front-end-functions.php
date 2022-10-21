@@ -83,12 +83,15 @@ if (!function_exists('mytheme_the_content_filter')) {
 			<div id="ShopIt">
 				<div class="has-text-align-center has-large-font-size" >
 					<div style="text-align: center;height: 73px;" >
-						<button id="shopitprintbtn" onclick="shopitprint()" style="float: right; height: 45px; font-size: 26px; width: 90px;" class="">Print</button>
+						<button id="shopitprintbtn" onclick="shopitprint()" style="float: right; height: 45px; font-size: 1rem; width: 90px;" class="">Print</button>
 							<div>
 								<img loading="lazy" id="shopitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://secureservercdn.net/198.71.233.213/ogy.39b.myftpupload.com/wp-content/uploads/2021/12/Mini-Cart.jpg" src="undefined"/>
 								 Shop It!
 							</div>				
-						<style>.numbers {background: black;color: white;border-radius: 50%;width: 26px;align-items: center;margin: 0.5rem;text-align: center;font-size: 19px;font-family: calibri;vertical-align: middle;height: 26px;display: inline-block;}</style>
+						<style>.numbers {background: black;color: white;border-radius: 50%;width: 26px;align-items: center;margin: 0.5rem;text-align: center;font-size: 19px;font-family: calibri;vertical-align: middle;height: 26px;display: inline-block;}
+								button#miseitprintbtn {font-size: 1rem !IMPORTANT;}
+								button#makeitprintbtn {font-size: 1rem !important;}
+						</style>
 					</div>
 				</div>
 			<?php
@@ -118,14 +121,13 @@ if (!function_exists('mytheme_the_content_filter')) {
 			}
 			ob_start();?>
 			</div>
-			</div>
 			<?php
 			$html = ob_get_clean();
 			$content = $content . $html;
 			if ($miseit_count !== 0){
 				ob_start();?>
 				<div  id="MiseIt">
-					<div style="text-align: center;font-size: 2.25em;height: 87px;"><button id="miseitprintbtn" onclick="miseitprint()" style="float: right;height: 45px;font-size: 26px;width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://shopitmiseitmakeit.ca/wp-content/uploads/2021/12/Mini-Bowl-2.jpg " src="undefined"> <span>Mise It!</span></div></div>
+					<div style="text-align: center;font-size: 2.25em;height: 87px;"><button id="miseitprintbtn" onclick="miseitprint()" style="float: right;height: 45px;font-size: 1rem;width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://shopitmiseitmakeit.ca/wp-content/uploads/2021/12/Mini-Bowl-2.jpg " src="undefined"> <span>Mise It!</span></div></div>
 				<?php
 				$html = ob_get_clean();
 				$content = $content . $html;
@@ -139,7 +141,7 @@ if (!function_exists('mytheme_the_content_filter')) {
 				$makeit_tools .= do_shortcode('[makeit_tools]');
 				ob_start();?>
 				<div id="MakeIt"> 
-					<div style="text-align: center;font-size: 2.25em;height: 87px;" ><button id="makeitprintbtn" onclick="makeitprint()" style="float: right;height: 45px;font-size: 26px;width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://secureservercdn.net/198.71.233.213/ogy.39b.myftpupload.com/wp-content/uploads/2021/12/Shop-It-Mise-It-Make-It-Logo-Design-06.jpg" src="undefined"> <span>Make It!</span></div></div>
+					<div style="text-align: center;font-size: 2.25em;height: 87px;" ><button id="makeitprintbtn" onclick="makeitprint()" style="float: right;height: 45px;font-size: 1rem;width: 90px;" class="">Print</button><div><img loading="lazy" id="miseitimage" style="width: 52px;height: 56px; vertical-align: middle;" alt="Mise It!" srcset="https://secureservercdn.net/198.71.233.213/ogy.39b.myftpupload.com/wp-content/uploads/2021/12/Shop-It-Mise-It-Make-It-Logo-Design-06.jpg" src="undefined"> <span>Make It!</span></div></div>
 				<?php
 				$html = ob_get_clean();
 				$content = $content . $html;
@@ -167,7 +169,7 @@ if (!function_exists('mytheme_the_content_filter')) {
 				}
 				$content = $content . $makeit_lists;			
 				ob_start();?>
-				</tbody></table></figure></div>
+				</tbody></table></figure></div></div>
 				<?php
 				$html = ob_get_clean();
 				$content = $content . $html;
