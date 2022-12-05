@@ -33,8 +33,7 @@ if (!function_exists('mytheme_ingredient_list_shortcode')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            Ingredient list HTML.
 	 */
-	function mytheme_ingredient_list_shortcode($atts, $content = null, $shortcode)
-	{
+	function mytheme_ingredient_list_shortcode($atts, $content = null, $shortcode) {
 
 		if ($shortcode) {
 
@@ -53,8 +52,7 @@ if (!function_exists('mytheme_ingredient_list')) {
 	 *
 	 * @param  int $list_number Number of the ingredient list shortcode.
 	 */
-	function mytheme_ingredient_list($list_number = null)
-	{
+	function mytheme_ingredient_list($list_number = null) {
 
 		$ingredients = get_post_meta(get_the_ID(), 'custom_meta_ingredient_group' . $list_number, true);
 		$title       = get_post_meta(get_the_ID(), 'custom_meta_ingredient_group' . $list_number . '_title', true);
@@ -73,7 +71,7 @@ if (!function_exists('mytheme_ingredient_list')) {
 			<h2><?php echo esc_html($title); ?></h2>
 
 			<table class="rcps-table-ingredients">
-				
+
 				<?php
 				foreach ($ingredients as $key => $entry) {
 					$ingredient = '';
@@ -91,7 +89,7 @@ if (!function_exists('mytheme_ingredient_list')) {
 						$amount = $entry['amount'];
 					}
 					if (!empty($entry['overbuy'])) {
-						$overbuy = $entry['overbuy'] == "on"?"*":"";
+						$overbuy = $entry['overbuy'] == "on" ? "*" : "";
 					}
 
 					if (!empty($entry['ingredient'])) {
@@ -148,8 +146,7 @@ if (!function_exists('mytheme_miseit_list_shortcode')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            miseit list HTML.
 	 */
-	function mytheme_miseit_list_shortcode($atts, $content = null, $shortcode)
-	{
+	function mytheme_miseit_list_shortcode($atts, $content = null, $shortcode) {
 
 		if ($shortcode) {
 
@@ -159,7 +156,6 @@ if (!function_exists('mytheme_miseit_list_shortcode')) {
 			// Returns the miseit list HTML.
 			return mytheme_miseit_list($list_number);
 		}
-		
 	}
 }
 
@@ -169,12 +165,11 @@ if (!function_exists('mytheme_miseit_list')) {
 	 *
 	 * @param  int $list_number Number of the miseit list shortcode.
 	 */
-	function mytheme_miseit_list($list_number = null)
-	{
+	function mytheme_miseit_list($list_number = null) {
 
 		$miseits = get_post_meta(get_the_ID(), 'custom_meta_miseit_group' . $list_number, true);
 		$title       = get_post_meta(get_the_ID(), 'custom_meta_miseit_group' . $list_number . '_title', true);
-		
+
 		if (is_array($miseits) && !empty($miseits[0])) {
 
 			if (empty($title)) {
@@ -183,38 +178,47 @@ if (!function_exists('mytheme_miseit_list')) {
 
 			// Turn on output buffering.
 			ob_start();
-			?>
-			<figure class="wp-block-table is-style-stripes"><table><tbody><tr><td><strong>
-				<span style="padding: 0.6rem 0.2rem;"><?php echo esc_html($title); ?></span></strong></td><td style="display: flex;align-items: center;justify-content: flex-end;" class="has-text-align-right" data-align="right">
-				<span class="numbers"><?php echo intval($list_number) == 0?1:intval($list_number) ?></span></td></tr>
-	
-				<?php
-				foreach ($miseits as $key => $entry) {
-					$ingredient = '';
-					$instruction     = '';
-
-					if (!empty($entry['ingredient'])) {
-						$ingredient = $entry['ingredient'];
-						if (is_rtl()) {
-							$ingredient = '&#8207;' . $ingredient;
-						}
-					}
-
-					if (!empty($entry['instruction'])) {
-						$instruction = $entry['instruction'];
-					}
-
-					if (!empty($entry['ingredient'])) {
-				?>
-						<tr >
-							<td style="padding: 0rem 0.2rem;"><?php echo wp_kses_post($ingredient); ?></td>
-							<td class="has-text-align-right" data-align="right"><?php echo wp_kses_post($instruction); ?></td>
+		?>
+			<figure class="wp-block-table is-style-stripes">
+				<table>
+					<tbody>
+						<tr>
+							<td><strong>
+									<span style="padding: 0.6rem 0.2rem;"><?php echo esc_html($title); ?></span></strong></td>
+							<td style="display: flex;align-items: center;justify-content: flex-end;" class="has-text-align-right" data-align="right">
+								<span class="numbers"><?php echo intval($list_number) == 0 ? 1 : intval($list_number) ?></span>
+							</td>
 						</tr>
-				<?php
-					}
-				}
-				?>
-			</tbody></table></figure>
+
+						<?php
+						foreach ($miseits as $key => $entry) {
+							$ingredient = '';
+							$instruction     = '';
+
+							if (!empty($entry['ingredient'])) {
+								$ingredient = $entry['ingredient'];
+								if (is_rtl()) {
+									$ingredient = '&#8207;' . $ingredient;
+								}
+							}
+
+							if (!empty($entry['instruction'])) {
+								$instruction = $entry['instruction'];
+							}
+
+							if (!empty($entry['ingredient'])) {
+						?>
+								<tr>
+									<td style="padding: 0rem 0.2rem;"><?php echo wp_kses_post($ingredient); ?></td>
+									<td class="has-text-align-right" data-align="right"><?php echo wp_kses_post($instruction); ?></td>
+								</tr>
+						<?php
+							}
+						}
+						?>
+					</tbody>
+				</table>
+			</figure>
 		<?php
 
 			// Gets current buffer contents and deletes current output buffer.
@@ -233,8 +237,7 @@ if (!function_exists('mytheme_shortcode_makeit_tools')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_shortcode_makeit_tools($atts, $content = null, $shortcode)
-	{
+	function mytheme_shortcode_makeit_tools($atts, $content = null, $shortcode) {
 		$makeit_tools =  get_post_meta(get_the_ID(), 'custom_meta_makeit_tools_group' . '_tools', true);
 		// Turn on output buffering.
 		ob_start();
@@ -242,17 +245,21 @@ if (!function_exists('mytheme_shortcode_makeit_tools')) {
 		<figure class="wp-block-table is-style-stripes">
 			<table>
 				<tbody>
-					<tr><td>
-						<strong>TOOLS</strong>
-					</td></tr>
-					<tr><td style="white-space: pre-line;"><?php echo ($makeit_tools); ?>				
-					</td></tr>
+					<tr>
+						<td>
+							<strong>TOOLS</strong>
+						</td>
+					</tr>
+					<tr>
+						<td style="white-space: pre-line;"><?php echo ($makeit_tools); ?>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</figure>
 		<?php
 		// Gets current buffer contents and deletes current output buffer.
-		return ob_get_clean();			
+		return ob_get_clean();
 	}
 }
 add_shortcode('makeit_tools', 'mytheme_shortcode_makeit_tools');
@@ -276,8 +283,7 @@ if (!function_exists('mytheme_makeit_list_shortcode')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            makeit list HTML.
 	 */
-	function mytheme_makeit_list_shortcode($atts, $content = null, $shortcode)
-	{
+	function mytheme_makeit_list_shortcode($atts, $content = null, $shortcode) {
 
 		if ($shortcode) {
 
@@ -287,7 +293,6 @@ if (!function_exists('mytheme_makeit_list_shortcode')) {
 			// Returns the makeit list HTML.
 			return mytheme_makeit_list($list_number);
 		}
-		
 	}
 }
 
@@ -300,16 +305,17 @@ if (!function_exists('mytheme_makeit_list')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_makeit_list($list_number = null)
-	{
+	function mytheme_makeit_list($list_number = null) {
 		$mikeits = get_post_meta(get_the_ID(), 'custom_meta_makeit_group_item' . $list_number, true);
 		$name       = get_post_meta(get_the_ID(), 'custom_meta_makeit_group' . $list_number . '_name', true);
 		if (is_array($mikeits) && !empty($mikeits[0])) {
-					// Turn on output buffering.
-			ob_start();	
-			if (!empty($name)){
-				?>
-				<tr><td colspan="4"><strong><span class="has-inline-color has-vivid-red-color"><?php echo $name; ?></span></strong></td><td></td><td></td><td class="has-text-align-center" data-align="center"></td></tr>
+			// Turn on output buffering.
+			ob_start();
+			if (!empty($name)) {
+		?>
+				<tr>
+					<td colspan="4"><strong><span class="has-inline-color has-vivid-red-color"><?php echo $name; ?></span></strong></td>
+				</tr>
 				<?php
 			}
 			foreach ($mikeits as $key => $entry) {
@@ -318,28 +324,47 @@ if (!function_exists('mytheme_makeit_list')) {
 				$how     = '';
 				$important     = '';
 
-				if (!empty($entry['do'])) {$do = $entry['do'];if (is_rtl()) {$do = '&#8207;' . $do;}}
-				if (!empty($entry['with'])) {$with = $entry['with'];if (is_rtl()) {$with = '&#8207;' . $with;}}
-				if (!empty($entry['how'])) {$how = $entry['how'];if (is_rtl()) {$how = '&#8207;' . $how;}}					
-				if (!empty($entry['important'])) {$important = $entry['important'];if (is_rtl()) {$important = '&#8207;' . $important;}}		
-				
-					if (!empty($entry['do'])) {		
-					?>
-						<tr class="rcps-makeit-checkable">
-							<td><?php echo wp_kses_post($do); ?></td>
-							<td><?php echo $with; ?></td>
-							<td><?php echo $how; ?></td>
-							<td class="has-text-align-center" data-align="center"><?php echo $important; ?></td>
-						</tr>								
-					<?php
-				
+				if (!empty($entry['do'])) {
+					$do = $entry['do'];
+					if (is_rtl()) {
+						$do = '&#8207;' . $do;
+					}
 				}
-				
+				if (!empty($entry['with'])) {
+					$with = $entry['with'];
+					if (is_rtl()) {
+						$with = '&#8207;' . $with;
+					}
+				}
+				if (!empty($entry['how'])) {
+					$how = $entry['how'];
+					if (is_rtl()) {
+						$how = '&#8207;' . $how;
+					}
+				}
+				if (!empty($entry['important'])) {
+					$important = $entry['important'];
+					if (is_rtl()) {
+						$important = '&#8207;' . $important;
+					}
+				}
+
+				if (!empty($entry['do'])) {
+				?>
+					<tr class="rcps-makeit-checkable">
+						<td><?php echo wp_kses_post($do); ?></td>
+						<td><?php echo $with; ?></td>
+						<td><?php echo $how; ?></td>
+						<td class="has-text-align-center" data-align="center"><?php echo $important; ?></td>
+					</tr>
+		<?php
+
+				}
 			}
 
 			// Gets current buffer contents and deletes current output buffer.
 			return ob_get_clean();
-		}	
+		}
 	}
 }
 
@@ -354,8 +379,7 @@ if (!function_exists('mytheme_shortcode_rcps_recipe_listing')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_shortcode_rcps_recipe_listing($atts, $content = null, $shortcode)
-	{
+	function mytheme_shortcode_rcps_recipe_listing($atts, $content = null, $shortcode) {
 
 		$wp_query_args = array(
 			'post_type'              => 'recipe',
@@ -410,8 +434,7 @@ if (!function_exists('mytheme_shortcode_rcps_video')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_shortcode_rcps_video($atts, $content = null, $shortcode)
-	{
+	function mytheme_shortcode_rcps_video($atts, $content = null, $shortcode) {
 
 		// Return video embed if available.
 		$video_url = get_post_meta(get_the_ID(), '_rcps_meta_video_url', true);
@@ -432,8 +455,7 @@ if (!function_exists('mytheme_shortcode_rcps_member_directory')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_shortcode_rcps_member_directory($atts, $content = null, $shortcode)
-	{
+	function mytheme_shortcode_rcps_member_directory($atts, $content = null, $shortcode) {
 
 		$users = mytheme_get_members();
 
@@ -470,8 +492,7 @@ if (!function_exists('mytheme_shortcode_rcps_submit_recipe')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_shortcode_rcps_submit_recipe($atts, $content = null, $shortcode)
-	{
+	function mytheme_shortcode_rcps_submit_recipe($atts, $content = null, $shortcode) {
 
 		$forms = mytheme_get_front_end_forms();
 		if ($forms) {
@@ -539,8 +560,7 @@ if (!function_exists('mytheme_shortcode_rcps_edit_recipe')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_shortcode_rcps_edit_recipe($atts, $content = null, $shortcode)
-	{
+	function mytheme_shortcode_rcps_edit_recipe($atts, $content = null, $shortcode) {
 
 		$forms = mytheme_get_front_end_forms();
 		if ($forms) {
@@ -622,8 +642,7 @@ if (!function_exists('mytheme_shortcode_rcps_user_settings')) {
 	 * @param  string $shortcode Name of the shortcode.
 	 * @return string            HTML.
 	 */
-	function mytheme_shortcode_rcps_user_settings($atts, $content = null, $shortcode)
-	{
+	function mytheme_shortcode_rcps_user_settings($atts, $content = null, $shortcode) {
 
 		$current_user_id = get_current_user_id();
 

@@ -159,22 +159,15 @@ if (!function_exists('mytheme_the_content_filter')) {
 				ob_start(); ?>
 				<div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
 					<div style=" width: 24rem; ">
-						<div style=" background: #d42961; padding: 1rem 1rem 0rem 1rem; background-clip: content-box; overflow: hidden; ">
+						<div style=" background: #d42961; padding: 1rem 1rem 0rem 1rem;color: white; background-clip: content-box; overflow: hidden; ">
 							<div style=" position: relative; justify-content: center; height: 3rem; ">
 								<div style=" display: flex; border-radius: 50%; width: 3.5rem; height: 3.5rem; justify-content: center; align-items: center; border: 3px solid white; background: #d42a62; color: white; box-shadow: 0 0 2px 0px black; position: absolute; left: 42.5%; ">$$$ </div>
 								<div style=" width: 100%; height: 3rem; background: linear-gradient(to bottom , white 0%, white 50%, #d42961 50%,#d42961 100%); z-index: -3; margin-top: 0; "></div>
+							</div>	
+							<div style=" display: flex; justify-content: space-between; font-size: x-large; padding: 0.3rem; ">
+								<span>Buy What I Need </span><span id="shopit-buy-need">$704.78</span>
 							</div>
-							<table style=" color: white; margin: 0; ">
-								<tbody>
-									<tr>
-										<td>
-											<div style=" display: flex; justify-content: space-between; font-size: x-large; padding: 0.3rem; ">
-												<span>Buy What I Need </span><span id="shopit-buy-need">$704.78</span>
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							
 						</div>
 						<div style=" padding: 0 1rem 1rem 1rem; color: white; ">
 							<div style=" display: flex; justify-content: space-between; font-size: 12pt; background: #5a5a5a; padding: 0.5rem; "><span>Cost of All Ingredients</span><span id="shopit-all-ingredients">$191.01</span></div>
