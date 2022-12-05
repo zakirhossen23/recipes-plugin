@@ -58,9 +58,14 @@ function mytheme_custom_meta_single_recipe_ingredients()
 		));
 
 		$ingredient_group->add_group_field($group_field_id, array(
-			'name' => __('Amount', 'recipes'),
+			'name' => __('Cost', 'recipes'),
 			'id'   => 'amount',
-			'type' => 'text',
+			'type' => 'text_money',
+		));
+		$ingredient_group->add_group_field($group_field_id, array(
+			'name' => __('Overbuy', 'recipes'),
+			'id'   => 'overbuy',
+			'type' => 'checkbox',
 		));
 	}
 }
@@ -262,168 +267,6 @@ function rcps_cmb2_box_recipe_nutrition()
 			'step' => '1',
 			'min'  => '1',
 			'size' => '3',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Calories in each serving', 'recipes'),
-		'id'                        => 'custom_meta_calories_in_serving',
-		'type'                      => 'text_small',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'calories',
-		'attributes'                => array(
-			'type' => 'number',
-			'step' => '1',
-			'min'  => '1',
-			'size' => '4',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Total Carbohydrate', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_carbohydrate',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'carbohydrateContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'rcps_daily_value'          => 275,
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Cholesterol', 'recipes'),
-		'desc'                      => __('mg', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_cholesterol',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'cholesterolContent',
-		'rcps_unit'                 => __('mg', 'recipes'),
-		'rcps_daily_value'          => 300,
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Total Fat', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_total_fat',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'fatContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'rcps_daily_value'          => 78,
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Saturated Fat', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_saturated_fat',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'saturatedFatContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'rcps_daily_value'          => 20,
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Unsaturated Fat', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_unsaturated_fat',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'unsaturatedFatContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Trans Fat', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_trans_fat',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'transFatContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Dietary Fiber', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_fiber',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'fiberContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'rcps_daily_value'          => 28,
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Protein', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_protein',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'proteinContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'rcps_daily_value'          => 50,
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Sodium', 'recipes'),
-		'desc'                      => __('mg', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_sodium',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'sodiumContent',
-		'rcps_unit'                 => __('mg', 'recipes'),
-		'rcps_daily_value'          => 2300,
-		'attributes'                => array(
-			'type' => 'number',
-		),
-	));
-
-	$cmb->add_field(array(
-		'name'                      => __('Sugars', 'recipes'),
-		'desc'                      => __('g', 'recipes'),
-		'id'                        => '_rcps_meta_nutrient_sugars',
-		'type'                      => 'text_small',
-		'sanitization_cb'           => 'rcps_cmb2_sanitize_float_value',
-		'rcps_form_display'         => true,
-		'rcps_structured_data_name' => 'sugarContent',
-		'rcps_unit'                 => __('g', 'recipes'),
-		'rcps_daily_value'          => 50,
-		'attributes'                => array(
-			'type' => 'number',
 		),
 	));
 

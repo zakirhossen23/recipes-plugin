@@ -73,9 +73,11 @@ if (!function_exists('mytheme_ingredient_list')) {
 			<h2><?php echo esc_html($title); ?></h2>
 
 			<table class="rcps-table-ingredients">
+				
 				<?php
 				foreach ($ingredients as $key => $entry) {
 					$ingredient = '';
+					$overbuy    = '';
 					$amount     = '';
 
 					if (!empty($entry['ingredient'])) {
@@ -88,13 +90,17 @@ if (!function_exists('mytheme_ingredient_list')) {
 					if (!empty($entry['amount'])) {
 						$amount = $entry['amount'];
 					}
+					if (!empty($entry['overbuy'])) {
+						$overbuy = $entry['overbuy'] == "on"?"*":"";
+					}
 
 					if (!empty($entry['ingredient'])) {
 				?>
 						<tr class="rcps-ingredient-checkable">
-							<td><?php echo wp_kses_post($ingredient); ?>
-							<td>
+							<td><?php echo wp_kses_post($ingredient); ?></td>
+							<td><?php echo wp_kses_post($overbuy); ?></td>
 							<td><?php echo wp_kses_post($amount); ?></td>
+							<td><input type="checkbox"></td>
 						</tr>
 				<?php
 					}
